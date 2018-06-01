@@ -1,0 +1,62 @@
+-- --------------------
+-- -------- Ejercicio 1
+-- --------------------
+ 
+ 
+-- 1- Crear la tabla Facturas dentro de la base de datos con el siguiente detalle:
+ 
+-- Letra        char y PK
+-- Numero       integer y PK
+-- Fecha        date
+-- Monto        double
+ 
+-- PK significa Primary Key
+-- observar que se esta declarando una clave primaria compuesta
+-- es decir (letra,codigo)
+-- cada campo por si solo no es clave, ni tampoco identifica al registro
+-- pero la suma de los dos forman la clave
+ 
+create table facturas(
+letra char(1),
+numero integer,
+fecha date,
+monto double,
+primary key (letra,numero)
+);
+ 
+ 
+-- 2- Crear la tabla Articulos dentro de la base de datos con el siguiente detalle:
+ 
+-- Codigo       integer y PK
+-- Nombre       varchar (50)
+-- Precio       double
+-- Stock        integer
+ 
+create table articulos(
+codigo integer,
+nombre varchar(50),
+precio double,
+stock integer,
+primary key (codigo)
+);
+ 
+show tables;
+describe facturas;
+describe articulos;
+ 
+-- 3- Cargar 5 registros en cada tabla
+ 
+insert into articulos values (1,'destornillador',25,50);
+insert into articulos values (2,'pinza',35,22);
+insert into articulos values (3,'martillo',15,28);
+insert into articulos values (4,'maza',35,18);
+insert into articulos values (5,'valde',55,13);
+ 
+insert into facturas values ('a',0001,'2011/10/18',500);
+insert into facturas values ('a',0002,'2011/10/18',2500);
+insert into facturas values ('b',0003,'2011/10/18',320);
+insert into facturas values ('b',0004,'2011/10/18',120);
+insert into facturas values ('b',0005,'2011/10/18',560);
+-- inserto un registro con la fecha actual
+insert into facturas values ('c',0006,curdate(),300);
+ 

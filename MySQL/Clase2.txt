@@ -1,0 +1,289 @@
+-- Encender servicio mysql en paquete XAMPP
+-- Conectar WorkBench
+drop database if exists clase2;
+create database clase2;
+use clase2;
+
+create table clientes(
+codigo int auto_increment,
+    nombre varchar(20) not null,
+    apellido varchar(20) not null,
+    cuit varchar(13),
+    direccion varchar(50),
+    comentarios varchar(140),
+    primary key(codigo)
+);
+
+insert into clientes (nombre,apellido,cuit,direccion) values
+('Juan','Perez','1111','Viel 123'),
+('Laura','Soto','2222','Lima 333'),
+('Lorena','Galce','3333','Florida 444'),
+('Jose','Leon','4444','Maipu 555'),
+('Maria','Gallo','5555','Lavalle 1234');
+
+
+create table facturas(
+letra char(1),
+numero int,
+fecha date,
+monto double,
+primary key (letra,numero)
+);
+
+create table articulos(
+codigo integer,
+nombre varchar(50),
+precio double,
+stock integer,
+primary key (codigo)
+);
+
+insert into articulos values (1,'destornillador',25,50);
+insert into articulos values (2,'pinza',35,22);
+insert into articulos values (3,'martillo',15,28);
+insert into articulos values (4,'maza',35,18);
+insert into articulos values (5,'valde',55,13);
+ 
+insert into facturas values ('a',0001,'2011/10/18',500);
+insert into facturas values ('a',0002,'2011/10/18',2500);
+insert into facturas values ('b',0003,'2011/10/18',320);
+insert into facturas values ('b',0004,'2011/10/18',120);
+insert into facturas values ('b',0005,'2011/10/18',560);
+-- inserto un registro con la fecha actual
+insert into facturas values ('c',0006,curdate(),300);
+
+show databases;
+show tables;
+describe clientes;
+describe articulos;
+describe facturas;
+
+select * from clientes;
+select * from articulos;
+select * from facturas;
+
+-- Comando DML Select
+-- Alias y columas calculadas
+select letra,numero,fecha,monto,monto * 0.21 as Valor_IVA 
+	from facturas;
+    
+-- Filtrado con where
+select * from clientes where codigo=3;
+select * from clientes where nombre='Juan';
+
+-- Operadores relacionales < <= > >= <> !=
+select * from clientes where codigo<=3;
+select * from clientes where codigo>3;
+select * from clientes where codigo<>3;
+select * from clientes where codigo!=3;
+
+select * from clientes where apellido<='Perez';
+select * from clientes where apellido>'Perez';
+
+-- Operadores Logicos and or 
+select * from clientes where codigo=3 or nombre='Juan';
+
+insert into clientes (nombre,apellido) values
+('Laura','Perez'),
+('Laura','Gomez'),
+('Juan','Gomez');
+ 
+select * from clientes where nombre='Juan' or nombre='Laura';
+select * from clientes where nombre='Juan' or apellido='Perez';
+select * from clientes where nombre='Juan' and apellido='Perez';
+
+insert into facturas values
+('c',1001,curdate(),250),
+('c',1002,curdate(),280),
+('c',1003,curdate(),300),
+('c',1004,curdate(),350),
+('c',1005,curdate(),370),
+('c',1006,curdate(),400),
+('c',1007,curdate(),410),
+('c',1008,curdate(),450);
+
+select * from facturas 
+	where monto>=300
+    and monto<=400;
+
+select * from facturas
+	where monto<300
+    or monto>400;
+
+-- Operador between not between
+select * from facturas where monto between 300 and 400;
+select * from facturas where monto not between 300 and 400;
+
+select * from clientes where apellido 
+	between 'gomez' and 'perez';
+
+
+
+select * from clientes
+	where codigo=2
+    or codigo=4
+    or codigo=5
+    or codigo=7;
+
+select * from clientes 
+	where codigo!=2
+    and codigo!=4
+    and codigo!=5
+    and codigo!=7;
+-- clausula in not in
+select * from clientes where codigo in(2,4,5,7);
+select * from clientes where codigo not in(2,4,5,7);
+
+select * from clientes where nombre in('ana','laura','juan');
+
+-- Valores null
+insert into clientes (nombre,apellido,direccion) values
+('Ana','Garcia',null),
+('Laura','Moretti','');
+
+select * from clientes where direccion is null;
+select * from clientes where direccion is not null;
+select * from clientes where direccion ='';
+
+select * from clientes where direccion =null; -- error
+
+insert into clientes (nombre,apellido) values
+('Marta','Perez'),('Maria','Perez'),('Mirta','Perez'),
+('Marcelo','Perez'),('Armando','Perez'),('Omar','Perez'),
+('Mariano','Perez'),('Mariana','Perez'),('Monica','Perez'),
+('Micaela','Perez'),('Marcia','Perez'),('Mirna','Perez');
+
+
+-- busqueda de expresiones con like y not like
+select * from clientes where nombre like 'm%';
+select * from clientes where nombre like 'ma%';
+select * from clientes where nombre like 'marc%';
+select * from clientes where nombre like '%a';
+select * from clientes where nombre like 'm%a';
+select * from clientes where nombre like '%ar%';
+select * from clientes where nombre not like 'm%';
+select * from clientes where nombre like 'm_r%';
+select * from clientes where nombre like '___';
+select * from clientes where nombre like '____';
+select * from clientes where nombre like '_____%';
+
+-- Order By
+select * from clientes order by nombre;
+select * from clientes order by nombre asc;
+select * from clientes order by nombre desc;
+select * from clientes order by apellido,nombre;
+select * from clientes order by apellido desc, nombre desc;
+
+-- /box/carlos rios/mysql/laboratorio2.txt
+
+-- -----------
+-- Ejercicio 2
+-- -----------
+ 
+ 
+-- Llenar las tablas artículos clientes y facturas con 5 registros cada una,
+ 
+-- ejemplo:
+insert into clientes (nombre,apellido,cuit,direccion) values ('jose','benuto','3647493','loria 940');
+ 
+ 
+insert into facturas (letra,numero,fecha,monto) values ('a',1001,'2012/10/25',350);
+insert into facturas (letra,numero,fecha,monto) values ('a',1002,curdate(),540);
+select * from facturas;
+ 
+insert into articulos (codigo,nombre,precio,stock) values (110,'destornillador',30,100);
+insert into articulos (codigo,nombre,precio,stock) values (111,'martillo',40*1.21,50);
+-- en este ultimo ejemplo le calculamos el valor del iva al valor del articulos
+select * from articulos;
+ 
+ 
+ 
+ 
+-- -----------
+-- Ejercicio 3
+-- -----------
+ 
+ 
+-- 1 - Basándose en la tabla artículos obtener los siguientes listados.
+ 
+-- a-   artículos con precio mayor a 100
+select * from articulos where precio >100;
+insert into articulos (codigo,nombre,precio,stock) values
+(100,'Bordeadora',500,10);
+-- b-   artículos con precio entre 20 y 40 (usar < y >)
+select * from articulos where precio >=20 and precio <=40;
+-- c-   artículos con precio entre 40 y 60 (usar BETWEEN)
+select * from articulos where precio between 40 and 60;
+-- d-   artículos con precio = 20 y stock mayor a 30
+select * from articulos where precio =20 and stock>30;
+insert into articulos values
+(101,'Pinza',20,50);
+-- e-   artículos con precio (12,20,30) no usar IN
+select * from articulos where precio =12 or precio=20 or precio=30;
+-- f-   artículos con precio (12,20,30) usar el IN
+select * from articulos where precio in(12,20,30);
+-- g-   artículos que su precio no sea (12,20,30)
+select * from articulos where precio not in (12,20,30);
+ 
+--  2- Listar los artículos ordenados por precio de mayor a menor, y 
+--     si hubiera precio iguales deben quedar ordenados por nombre.
+select * from articulos order by precio desc,nombre;
+
+--  3- Listar todos los artículos incluyendo una columna denominada 
+--     precio con IVA, la cual deberá tener el monto con el iva del 
+--     producto.
+select codigo,nombre,precio,precio*1.21 as Precio_Con_Iva,stock
+	from articulos;
+select *,precio*1.21 as Precio_Con_Iva from articulos;
+-- solo funciona en MySQL
+
+--  4- Listar todos los artículos incluyendo una columna denominada 
+--     'cantidad de cuotas' y otra 'valor de cuota', la cantidad es 
+--     fija y es 3, el valor de cuota corresponde a 1/3 del monto con 
+--     un 5% de interés.
+select codigo,nombre,precio,3 as Cantidad_De_Cuotas, 
+	round(precio/3*1.05,2) as Valor_De_Cuota, stock from articulos;
+
+
+-- Comando DML Insert
+
+-- Insert normal con declaración de campos (ANSI)
+insert into clientes (nombre,apellido,direccion) values
+('Hernan','Molina','Larrea 222');
+
+-- Insert abreviado sin declaración de campos(ANSI)
+insert into clientes values
+(null,'Cristian','Mendoza','12345','Viel 333','');
+
+-- Insert Masivo (ANSI)
+insert into clientes (nombre,apellido) values
+('Ana','Godoy'),
+('Melina','Miguel'),
+('Mariela','Casimito'); 
+
+-- Insert set (NO ANSI)
+insert clientes set nombre='Leandro',apellido='Segovia',
+	direccion='Lavalle 222';
+
+-- Comando DML Delete
+delete from clientes where codigo=3;
+delete from clientes where nombre='Juan';
+
+-- desactivamos la protección safe_update (sirve para comandos DML)
+set sql_safe_updates=0;		-- =1 activamos lo protección
+
+
+select * from clientes;
+
+insert into clientes (codigo,nombre,apellido) values 
+(100,'Homero','Simpson');
+
+delete from clientes where codigo=100;
+insert into clientes (nombre,apellido) values ('Bart','Simpson');
+
+delete from clientes;
+insert into clientes (nombre,apellido) values ('Lisa','Simpson');
+
+-- truncar una tabla
+-- Comando DDL Truncate
+truncate clientes;

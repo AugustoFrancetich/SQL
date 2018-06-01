@@ -1,0 +1,24 @@
+-- ------------------------
+-- Definiciones importantes
+-- ------------------------
+ 
+ 
+-- Significado de SQL
+-- Structured Query Language
+ 
+-- ANSI SQL
+-- En la actualidad el SQL es el estándar de facto de la inmensa mayoría de los SGBD comerciales.
+-- Y, aunque la diversidad de añadidos particulares que incluyen las distintas implementaciones
+-- comerciales del lenguaje es amplia, el soporte al estándar SQL-92 es general y muy amplio.
+ 
+ 
+-- DDL (DATA DEFINITION LANGUAGE)
+-- Create table
+-- Alter table
+-- Drop table
+ 
+-- DML (DATA MANIPULATION LANGUAGE)
+-- Select
+-- Insert
+-- Update
+-- Delete

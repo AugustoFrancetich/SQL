@@ -1,0 +1,321 @@
+-- Profe: Carlos Ríos		carlos.rios@educacionit.com
+drop database if exists clase3;
+create database clase3;
+use clase3;
+
+-- //box/carlos ríos/mysql/base.txt
+
+create table clientes(
+codigo int auto_increment,
+    nombre varchar(20) not null,
+    apellido varchar(20) not null,
+    cuit varchar(13),
+    direccion varchar(50),
+    comentarios varchar(140),
+    primary key(codigo)
+);
+
+insert into clientes (nombre,apellido,cuit,direccion) values
+('Juan','Perez','1111','Viel 123'),
+('Laura','Soto','2222','Lima 333'),
+('Lorena','Galce','3333','Florida 444'),
+('Jose','Leon','4444','Maipu 555'),
+('Maria','Gallo','5555','Lavalle 1234');
+
+
+create table facturas(
+letra char(1),
+numero int,
+fecha date,
+monto double,
+primary key (letra,numero)
+);
+
+create table articulos(
+codigo integer,
+nombre varchar(50),
+precio double,
+stock integer,
+primary key (codigo)
+);
+
+insert into articulos values (1,'destornillador',25,50);
+insert into articulos values (2,'pinza',35,22);
+insert into articulos values (3,'martillo',15,28);
+insert into articulos values (4,'maza',35,18);
+insert into articulos values (5,'valde',55,13);
+ 
+insert into facturas values ('a',0001,'2011/10/18',500);
+insert into facturas values ('a',0002,'2011/10/18',2500);
+insert into facturas values ('b',0003,'2011/10/18',320);
+insert into facturas values ('b',0004,'2011/10/18',120);
+insert into facturas values ('b',0005,'2011/10/18',560);
+-- inserto un registro con la fecha actual
+insert into facturas values ('c',0006,curdate(),300);
+
+
+insert into clientes (nombre,apellido) values
+('Laura','Perez'),
+('Laura','Gomez'),
+('Juan','Gomez');
+
+insert into facturas values
+('c',1001,curdate(),250),
+('c',1002,curdate(),280),
+('c',1003,curdate(),300),
+('c',1004,curdate(),350),
+('c',1005,curdate(),370),
+('c',1006,curdate(),400),
+('c',1007,curdate(),410),
+('c',1008,curdate(),450);
+
+
+insert into clientes (nombre,apellido) values
+('Marta','Perez'),('Maria','Perez'),('Mirta','Perez'),
+('Marcelo','Perez'),('Armando','Perez'),('Omar','Perez'),
+('Mariano','Perez'),('Mariana','Perez'),('Monica','Perez'),
+('Micaela','Perez'),('Marcia','Perez'),('Mirna','Perez');
+
+
+
+insert into facturas (letra,numero,fecha,monto) values ('a',1001,'2012/10/25',350);
+insert into facturas (letra,numero,fecha,monto) values ('a',1002,curdate(),540);
+select * from facturas;
+ 
+insert into articulos (codigo,nombre,precio,stock) values (110,'destornillador',30,100);
+insert into articulos (codigo,nombre,precio,stock) values (111,'martillo',40*1.21,50);
+
+
+-- Insert normal con declaración de campos (ANSI)
+insert into clientes (nombre,apellido,direccion) values
+('Hernan','Molina','Larrea 222');
+
+insert into clientes values
+(null,'Cristian','Mendoza','12345','Viel 333','');
+
+insert into clientes (nombre,apellido) values
+('Ana','Godoy'),
+('Melina','Miguel'),
+('Mariela','Casimito'); 
+
+insert clientes set nombre='Leandro',apellido='Segovia',
+direccion='Lavalle 222';
+
+show tables;
+describe clientes;
+describe articulos;
+describe facturas;
+
+select * from articulos;
+select * from clientes;
+select * from facturas;
+
+/*
+
+-- Box/Carlos Ríos/mysql/laboratorio3.txt
+ 
+-- -----------
+-- Ejercicio 3
+-- -----------
+ 
+ 
+-- Basándose en la tabla clientes realizar los siguientes puntos.
+ 
+-- 1-   Insertar 5 clientes en la tabla clientes utilizando el insert
+--      into sin utilizar campos como parte de la sentencias, es decir
+--      de la forma simplificada.
+insert into clientes values 
+	(null,'Ana','Suarez','12345678','Viel 123','');
+
+-- 2-   Insertar 5 clientes en la tabla clientes utilizando los campos
+--      como parte de la sentencias, es decir de la forma extendida. 
+--      Completar solo los campos nombre, apellido y CUIT.
+insert into clientes (nombre,apellido,cuit) values
+	('Juan','Gomez','55555');
+
+-- 3-   Actualizar el nombre del cliente 1 a Jose.
+update clientes set nombre='Jose' where codigo=1;
+
+-- 4-   Actualizar el nombre apellido y cuit del cliente 3 a 
+--      Pablo Fuentes 20-21053119-0.
+update clientes set nombre='Pablo', apellido='Fuentes', 
+	cuit='20-21053119-0' where codigo=3;
+select * from clientes;
+
+-- 5-   Actualizar todos los comentarios NULL  a ''.
+set sql_safe_updates=0;
+update clientes set comentarios='' where comentarios is null;
+
+-- 6-   Eliminar los clientes con apellido Perez.
+delete from clientes where apellido='Perez';
+
+-- 7-   Eliminar los clientes con CUIT Terminan en 0.
+delete from clientes where cuit like '%0';
+ 
+-- Basando se en la tabla artículos, realizar los siguientes puntos.
+--  8- Aumentar un 20% los precios de los artículos con 
+--  	precio menor igual a 50.
+update articulos set precio=precio*1.2 where precio<=50;
+
+--  9- Aumentar un 15% los precios de los artículos con precio 
+-- 		mayor a 50.
+update articulos set precio=precio*1.15 where precio>50;
+
+--  10- Bajar un 5% los precios de los artículos con precio mayor a 
+--  	200.
+update articulos set precio=precio*0.95 where precio>200;
+
+--  11- Eliminar los artículos con stock menor a 0.
+delete from articulos where stock<0;
+
+-- funciones de agrupamiento
+
+-- función max(argumento)	argumento: numerico, texto, fecha hora
+select max(monto) from facturas;
+select max(monto) as máximo from facturas;
+select max(nombre) as ultimo_nombre from clientes;
+select max(fecha) as ultimo_dia from facturas;
+
+-- función min(argumento) 	argumento: numerico, texto, fecha hora
+select min(monto) as valor_mínimo from facturas;
+select min(nombre) as primer_nombre from clientes;
+select min(fecha) as primer_fecha from facturas;
+
+-- función sum(argumento) 	argumento: numerico
+select sum(monto) as total from facturas;
+
+-- función avg(argumento) 	argumento: numerico
+select avg(monto) as promedio from facturas;
+
+-- función count(*)
+select count(*) as cantidad from facturas;
+select count(*) as cantidad from clientes;
+select count(direccion) as cantidad from clientes;
+
+-- Agrupamiento con group by
+select letra,sum(monto) as total from facturas where letra='a';
+select letra,sum(monto) as total from facturas where letra='b';
+select letra,sum(monto) as total from facturas where letra='c';
+
+
+-- 	letra	total
+-- 		a	3890
+-- 		b	1000
+-- 		c	3110
+
+select letra,sum(monto) as total from facturas group by letra;
+
+-- uso de having
+select letra,sum(monto) as total from facturas group by letra having total>=2000;
+
+
+-- subconsultas
+select max(monto) from facturas;		-- 2500
+select * from facturas where monto=2500;
+
+select * from facturas where monto=(select max(monto) from facturas);
+
+-- //Box/Carlos Ríos/Mysql/Laboratorio4.txt
+ 
+--  -----------
+--  EJERCICIO 4
+--  -----------
+ 
+-- 1. Crear la tabla 'autos' dentro de la base de datos con los siguiente detalle:
+ 
+--  codigo  INTEGER y PK
+--  marca   VARCHAR(20)
+--  modelo  VARCHAR(20)
+--  color   VARCHAR(20)
+--  anio    INTEGER
+--  precio  DOUBLE
+
+create table autos(
+	codigo 	int primary key,
+    marca  	varchar(20),
+    modelo	varchar(20),
+    color	varchar(20),
+    anio	integer,
+    precio	double
+);
+
+ 
+-- 2. Cargar la tabla con 5 autos.
+insert into autos values (1,'Ford','Ka','Negro',2012,150000);
+
+-- 3. Realizar las siguientes consultas:
+--  a. obtener el precio máximo.
+select max(precio) as Precio_Máximo from autos;
+--  b. obtener el precio mínimo.
+select min(precio) as Precio_Mínimo from autos;
+--  c. obtener el precio mínimo entre los años 2000 y 2008.
+select min(precio) as Precio_Mínimo from autos where anio between 2000 and 2008;
+--  d. obtener el precio promedio.
+select round(avg(precio),2) as Precio_Promedio from autos;
+--  e. obtener el precio promedio del año 2006.
+select round(avg(precio),2) as Precio_Promedio from autos where anio=2006;
+--  f. obtener la cantidad de autos.
+select count(*) as cantidad from autos;
+--  g. obtener la cantidad de autos que tienen un precio entre $35.000 y $40.000.
+select count(*) as cantidad from autos where precio between 35000 and 40000;
+--  h. obtener la cantidad de autos que hay en cada año.
+select anio as año, count(*) as cantidad from autos group by anio;
+--  i. obtener la cantidad de autos y el precio promedio en cada año.
+select anio as año, count(*) as cantidad, round(avg(precio),2) as precio_promedio
+	from autos group by anio;
+--  j. obtener la suma de precios y el promedio de precios según marca.
+select marca,sum(precio) as 'Suma Precios', round(avg(precio),2) as Precio_Promedio
+	from autos group by marca;
+--  k. informar los autos con el menor precio.
+select * from autos where precio=(select min(precio) from autos);
+--  l. informar los autos con el menor precio entre los años 2008 y 2010
+select * from autos where anio between 2008 and 2010 and
+	precio=(select min(precio) from autos where anio between 2008 and 2010);
+
+*/
+
+-- creamos el campo Foreign Key (FK)-(Clave Foranea)
+alter table facturas add codigo int;
+
+describe facturas;
+
+select * from facturas;
+
+update facturas set codigo=1 where numero=1;
+update facturas set codigo=1 where numero=2;
+update facturas set codigo=2 where numero=3;
+update facturas set codigo=4 where numero=4;
+update facturas set codigo=5 where numero=5;
+
+-- Producto Carteciano
+select * from clientes,facturas;
+
+select count(*) cantidad from clientes;			-- 	26
+select count(*) cantidad from facturas;			-- 	16
+select 26*16;									-- 416
+select count(*) cantidad from clientes,facturas;-- 416
+
+-- consulta del producto relacionado
+select * from clientes,facturas where clientes.codigo=facturas.codigo;
+
+select * from clientes c,facturas f where c.codigo=f.codigo;
+
+-- uso del join
+select * from clientes c join facturas f on c.codigo=f.codigo;
+
+-- Cuales son las facturas de Juan Perez
+select letra,numero,fecha,monto 
+	from clientes c join facturas f on c.codigo=f.codigo
+    where c.nombre='Juan' and c.apellido='Perez';
+
+
+
+
+
+
+
+
+
+
+
+

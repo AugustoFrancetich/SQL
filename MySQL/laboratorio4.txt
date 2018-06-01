@@ -1,0 +1,29 @@
+ 
+--  -----------
+--  EJERCICIO 4
+--  -----------
+ 
+-- 1. Crear la tabla 'autos' dentro de la base de datos 'intro' con el siguiente detalle:
+ 
+--  codigo  INTEGER y PK
+--  marca   VARCHAR(20)
+--  modelo  VARCHAR(20)
+--  color   VARCHAR(20)
+--  anio    INTEGER
+--  precio  DOUBLE
+ 
+-- 2. Cargar la tabla con 5 autos.
+-- 3. Realizar las siguientes consultas:
+--  a. obtener el precio máximo.
+--  b. obtener el precio mínimo.
+--  c. obtener el precio mínimo entre los años 2000 y 2008.
+--  d. obtener el precio promedio.
+--  e. obtener el precio promedio del año 2006.
+--  f. obtener la cantidad de autos.
+--  g. obtener la cantidad de autos que tienen un precio entre $35.000 y $40.000.
+--  h. obtener la cantidad de autos que hay en cada año.
+--  i. obtener la cantidad de autos y el precio promedio en cada año.
+--  j. obtener la suma de precios y el promedio de precios según marca.
+--  k. informar los autos con el menor precio.
+--  l. informar los autos con el menor precio entre los años 2008 y 2010
+ 

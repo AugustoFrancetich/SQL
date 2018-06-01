@@ -1,0 +1,97 @@
+create table clientes(
+codigo int auto_increment,
+    nombre varchar(20) not null,
+    apellido varchar(20) not null,
+    cuit varchar(13),
+    direccion varchar(50),
+    comentarios varchar(140),
+    primary key(codigo)
+);
+
+insert into clientes (nombre,apellido,cuit,direccion) values
+('Juan','Perez','1111','Viel 123'),
+('Laura','Soto','2222','Lima 333'),
+('Lorena','Galce','3333','Florida 444'),
+('Jose','Leon','4444','Maipu 555'),
+('Maria','Gallo','5555','Lavalle 1234');
+
+
+create table facturas(
+letra char(1),
+numero int,
+fecha date,
+monto double,
+primary key (letra,numero)
+);
+
+create table articulos(
+codigo integer,
+nombre varchar(50),
+precio double,
+stock integer,
+primary key (codigo)
+);
+
+insert into articulos values (1,'destornillador',25,50);
+insert into articulos values (2,'pinza',35,22);
+insert into articulos values (3,'martillo',15,28);
+insert into articulos values (4,'maza',35,18);
+insert into articulos values (5,'valde',55,13);
+ 
+insert into facturas values ('a',0001,'2011/10/18',500);
+insert into facturas values ('a',0002,'2011/10/18',2500);
+insert into facturas values ('b',0003,'2011/10/18',320);
+insert into facturas values ('b',0004,'2011/10/18',120);
+insert into facturas values ('b',0005,'2011/10/18',560);
+-- inserto un registro con la fecha actual
+insert into facturas values ('c',0006,curdate(),300);
+
+
+insert into clientes (nombre,apellido) values
+('Laura','Perez'),
+('Laura','Gomez'),
+('Juan','Gomez');
+
+insert into facturas values
+('c',1001,curdate(),250),
+('c',1002,curdate(),280),
+('c',1003,curdate(),300),
+('c',1004,curdate(),350),
+('c',1005,curdate(),370),
+('c',1006,curdate(),400),
+('c',1007,curdate(),410),
+('c',1008,curdate(),450);
+
+
+insert into clientes (nombre,apellido) values
+('Marta','Perez'),('Maria','Perez'),('Mirta','Perez'),
+('Marcelo','Perez'),('Armando','Perez'),('Omar','Perez'),
+('Mariano','Perez'),('Mariana','Perez'),('Monica','Perez'),
+('Micaela','Perez'),('Marcia','Perez'),('Mirna','Perez');
+
+
+
+insert into facturas (letra,numero,fecha,monto) values ('a',1001,'2012/10/25',350);
+insert into facturas (letra,numero,fecha,monto) values ('a',1002,curdate(),540);
+select * from facturas;
+ 
+insert into articulos (codigo,nombre,precio,stock) values (110,'destornillador',30,100);
+insert into articulos (codigo,nombre,precio,stock) values (111,'martillo',40*1.21,50);
+
+
+-- Insert normal con declaración de campos (ANSI)
+insert into clientes (nombre,apellido,direccion) values
+('Hernan','Molina','Larrea 222');
+
+insert into clientes values
+(null,'Cristian','Mendoza','12345','Viel 333','');
+
+insert into clientes (nombre,apellido) values
+('Ana','Godoy'),
+('Melina','Miguel'),
+('Mariela','Casimito'); 
+
+insert clientes set nombre='Leandro',apellido='Segovia',
+direccion='Lavalle 222';
+
+
