@@ -1,0 +1,7 @@
+codigo,nombre,apellido,cuit,direccion,comentarios
+1,marge,simpson,NULL,NULL,NULL
+2,Juan,Perez,111111,"Lima 222",NULL
+3,magali,Smith,222222,"Viel 222",NULL
+4,Ana,Garcia,333333,"Maipu 333",NULL
+5,Laura,Godoy,444444,"Lavalle 648",NULL
+6,Cristian,Molina,555555,"Florida 222",NULL
